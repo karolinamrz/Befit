@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BeFit.Models.ExerciseType>
+@{
+    ViewData["Title"] = "Typy Ćwiczeń";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Typy Ćwiczeń</h1>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Create", "ExerciseTypes")" class="btn btn-primary">Dodaj Ćwiczenie</a>
+    }
+</div>
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="alert alert-warning">
+        <strong>Tryb administratora:</strong> Możesz zarządzać ćwiczeniami - dodawać, edytować i usuwać.
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        <strong>Informacja:</strong> Tutaj możesz przeglądać dostępne ćwiczenia. Tylko administrator może dodawać nowe ćwiczenia.
+    </div>
+}
+
+<div class="row" id="exercisesList">
+    @if (Model.Any())
+    {
+        @foreach (var exercise in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@exercise.Name</h5>
+                        @if (!string.IsNullOrEmpty(exercise.Description))
+                        {
+                            <p class="card-text">@exercise.Description</p>
+                        }
+                        @if (!string.IsNullOrEmpty(exercise.MuscleGroup))
+                        {
+                            <span class="badge bg-primary">@exercise.MuscleGroup</span>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="mt-3">
+                                <a href="@Url.Action("Edit", "ExerciseTypes", new { id = exercise.Id })"
+                                   class="btn btn-sm btn-outline-primary">Edytuj</a>
+                                <a href="@Url.Action("Delete", "ExerciseTypes", new { id = exercise.Id })"
+                                   class="btn btn-sm btn-outline-danger">Usuń</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12 text-center">
+            <p class="text-muted">Brak dostępnych ćwiczeń.</p>
+        </div>
+    }
+</div>

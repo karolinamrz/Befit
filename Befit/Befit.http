@@ -1,0 +1,6 @@
+@Befit_HostAddress = http://localhost:5127
+
+GET {{Befit_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

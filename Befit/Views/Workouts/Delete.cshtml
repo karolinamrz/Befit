@@ -1,0 +1,36 @@
+﻿@model BeFit.Models.Workout
+@{
+    ViewData["Title"] = "Usuń Trening";
+}
+
+<h1>Usuń Trening</h1>
+
+<div class="alert alert-warning">
+    <h4>Czy na pewno chcesz usunąć ten trening?</h4>
+    <p>Tej operacji nie można cofnąć.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Trening @Model.StartDate.ToString("dd.MM.yyyy")</h5>
+                <p class="card-text">
+                    <strong>Rozpoczęcie:</strong> @Model.StartDate.ToString("dd.MM.yyyy HH:mm")<br>
+                    <strong>Zakończenie:</strong> @Model.EndDate.ToString("dd.MM.yyyy HH:mm")<br>
+                    <strong>Czas trwania:</strong> @((Model.EndDate - Model.StartDate).TotalMinutes.ToString("0")) minut
+                </p>
+                @if (!string.IsNullOrEmpty(Model.Notes))
+                {
+                    <p class="card-text"><strong>Notatki:</strong> @Model.Notes</p>
+                }
+            </div>
+        </div>
+
+        <form asp-action="Delete" class="mt-3">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Usuń</button>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Anuluj</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BeFit.Controllers.StatisticsViewModel>
+@{
+    ViewData["Title"] = "Statystyki Treningowe";
+}
+
+<h1>Statystyki Treningowe</h1>
+
+<div class="alert alert-info">
+    <strong>Informacja:</strong> Statystyki pokazują dane z ostatnich 4 tygodni.
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">
+        <strong>Brak danych:</strong> Nie masz jeszcze żadnych treningów w ostatnich 4 tygodniach.
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var stat in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@stat.ExerciseTypeName</h5>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <strong>Wykonane razy:</strong>
+                                <span class="badge bg-primary">@stat.TimesPerformed</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>Łączne powtórzenia:</strong>
+                                <span class="badge bg-success">@stat.TotalRepetitions</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>Średnie obciążenie:</strong>
+                                <span class="badge bg-info">@stat.AverageWeight.ToString("0.0") kg</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>Maksymalne obciążenie:</strong>
+                                <span class="badge bg-danger">@stat.MaxWeight.ToString("0.0") kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

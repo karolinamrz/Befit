@@ -1,0 +1,43 @@
+﻿@model BeFit.Models.ExerciseType
+@{
+    ViewData["Title"] = "Dodaj Nowe Ćwiczenie";
+}
+
+<h1>Dodaj Nowe Ćwiczenie</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Nazwa ćwiczenia *</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Opis</label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MuscleGroup" class="form-label">Grupa mięśniowa</label>
+                <input asp-for="MuscleGroup" class="form-control" />
+                <span asp-validation-for="MuscleGroup" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Zapisz Ćwiczenie</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Anuluj</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

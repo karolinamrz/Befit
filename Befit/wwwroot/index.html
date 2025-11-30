@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeFit - Twój Asystent Treningowy</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+            width: 100%;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">BeFit</a>
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="/login.html" id="loginLink">Zaloguj</a>
+                    <a class="nav-link" href="/register.html" id="registerLink">Zarejestruj</a>
+                    <span class="nav-link d-none" id="userWelcome">Witaj!</span>
+                    <a href="#" class="btn btn-outline-light btn-sm d-none" id="logoutBtn">Wyloguj</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-5">
+            <div class="text-center">
+                <h1 class="display-4">Witaj w BeFit</h1>
+                <p class="lead">Twoja osobista aplikacja do śledzenia treningów i postępów.</p>
+
+                <div class="row mt-5">
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">💪 Typy Ćwiczeń</h5>
+                                <p class="card-text">Zarządzaj biblioteką ćwiczeń</p>
+                                <a href="/exercises.html" class="btn btn-primary">Przejdź do Ćwiczeń</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">📅 Treningi</h5>
+                                <p class="card-text">Twórz i śledź swoje sesje treningowe</p>
+                                <a href="/workouts.html" class="btn btn-primary">Moje Treningi</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">📊 Statystyki</h5>
+                                <p class="card-text">Analizuj swoje postępy treningowe</p>
+                                <a href="/statistics.html" class="btn btn-primary">Zobacz Statystyki</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">🎯 Postępy</h5>
+                                <p class="card-text">Śledź swoje cele i osiągnięcia</p>
+                                <a href="/workouts.html" class="btn btn-primary">Moje Postępy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5 d-none" id="userDashboard">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4>Witaj!</h4>
+                                <p class="text-muted">Co chcesz dzisiaj zrobić?</p>
+                                <div class="btn-group">
+                                    <a href="/workouts.html" class="btn btn-success">Rozpocznij Trening</a>
+                                    <a href="/exercises.html" class="btn btn-outline-primary">Przeglądaj Ćwiczenia</a>
+                                    <a href="/statistics.html" class="btn btn-outline-info">Sprawdź Statystyki</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="guestDashboard">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4>Dołącz do BeFit już dziś!</h4>
+                                <p class="text-muted">Zarejestruj się, aby korzystać z pełni funkcjonalności</p>
+                                <div class="btn-group">
+                                    <a href="/register.html" class="btn btn-primary">Zarejestruj się</a>
+                                    <a href="/login.html" class="btn btn-outline-secondary">Zaloguj się</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 BeFit - Twój asystent treningowy. Wszystkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userData = await Auth.checkAuth();
+            const userDashboard = document.getElementById('userDashboard');
+            const guestDashboard = document.getElementById('guestDashboard');
+            const userName = document.getElementById('userName');
+
+            if (userData.isAuthenticated && userData.user) {
+                userDashboard.classList.remove('d-none');
+                guestDashboard.classList.add('d-none');
+
+                if (userName) {
+                    userName.textContent = userData.user.FirstName || userData.user.Email || 'Użytkowniku';
+                }
+            } else {
+                userDashboard.classList.add('d-none');
+                guestDashboard.classList.remove('d-none');
+            }
+        });
+    </script>
+</body>
+</html>

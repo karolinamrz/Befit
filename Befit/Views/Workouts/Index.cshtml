@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BeFit.Models.Workout>
+@{
+    ViewData["Title"] = "Moje Treningi";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Moje Treningi</h1>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Dodaj Nowy Trening</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <strong>Informacja:</strong> Nie masz jeszcze żadnych treningów. Dodaj pierwszy trening!
+    </div>
+}
+
+<div class="row">
+    @foreach (var workout in Model)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Trening @workout.StartDate.ToString("dd.MM.yyyy")</h5>
+                    <p class="card-text">
+                        <strong>Rozpoczęcie:</strong> @workout.StartDate.ToString("dd.MM.yyyy HH:mm")<br>
+                        <strong>Zakończenie:</strong> @workout.EndDate.ToString("dd.MM.yyyy HH:mm")<br>
+                        <strong>Czas trwania:</strong> @((workout.EndDate - workout.StartDate).TotalMinutes.ToString("0")) minut
+                    </p>
+                    @if (!string.IsNullOrEmpty(workout.Notes))
+                    {
+                        <p class="card-text"><strong>Notatki:</strong> @workout.Notes</p>
+                    }
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group">
+                        <a href="@Url.Action("Edit", new { id = workout.Id })" class="btn btn-sm btn-outline-primary">Edytuj</a>
+                        <a href="@Url.Action("Delete", new { id = workout.Id })" class="btn btn-sm btn-outline-danger">Usuń</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
